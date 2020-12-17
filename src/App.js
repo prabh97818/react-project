@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import Auth from "./components/auth";
 import Navbar from "./components/navbar";
 import Profile from "./components/profile";
+import AddTask from "./components/tasks/addtask";
+import AllTask from "./components/tasks/allTask";
 import {
   BrowserRouter as Router,
   Switch,
@@ -95,15 +97,25 @@ const App = () => {
               />
             )}
           </Route>
-          <Route path="/profile">
+          <Route path="/addTask">
+          {!authdata.logged_in ? (
+              <Redirect to="auth"></Redirect>
+            ) : (
+            <AddTask />)}
+          </Route>
+          <Route path="/task">
+          {!authdata.logged_in ? (
+              <Redirect to="auth"></Redirect>
+            ) : (
+            <AllTask />)}
+          </Route>
+          <Route path="/">
           {!authdata.logged_in ? (
               <Redirect to="auth"></Redirect>
             ) : (
             <Profile UserData={userdata} />)}
-          </Route>
-          <Route path="/">
-          <Redirect to="profile"></Redirect>
-            {/* <Profile /> */}
+          
+            
           </Route>
         </Switch>
       </Router>

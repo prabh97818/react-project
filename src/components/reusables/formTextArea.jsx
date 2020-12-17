@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 
-const FormInput = ({
+const FormTextArea = ({
   name,
   type,
   placeholder,
@@ -10,39 +10,40 @@ const FormInput = ({
   error,
   children,
   label,
+  rows,
+  required,
   ...props
 }) => {
   return (
+
     <div className="form-group">
       <label htmlFor={name}>{label}</label>
-      <input
+      <textarea
         id={name}
+        rows={rows}
         name={name}
-        type={type}
-        placeholder={placeholder}
-        onChange={onChange}
+        // onChange={onChange}
         value={value}
         className={className}
         style={error && { border: "solid 1px red" }}
-      />
+        
+      ></textarea>
       {error && <p>{error}</p>}
     </div>
   );
 };
 
-FormInput.defaultProps = {
+FormTextArea.defaultProps = {
   type: "text",
   className: "form-control",
 };
 
-FormInput.propTypes = {
+FormTextArea.propTypes = {
   name: PropTypes.string.isRequired,
-  type: PropTypes.string,
   placeholder: PropTypes.string.isRequired,
-  type: PropTypes.oneOf(["text", "number", "password", "email", "date", "submit"]),
   className: PropTypes.string,
   value: PropTypes.any,
   onChange: PropTypes.func.isRequired,
 };
 
-export default FormInput;
+export default FormTextArea;
