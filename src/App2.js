@@ -4,12 +4,7 @@ import React, { useEffect, useState } from "react";
 import Auth from "./components/auth";
 import Navbar from "./components/navbar";
 import Profile from "./components/profile";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { CurrentUser, LoginUser, SignupUser } from "./services/myrequests";
 
 const App = () => {
@@ -28,34 +23,31 @@ const App = () => {
 
   useEffect(() => {
     if (authdata.logged_in) {
-      CurrentUser().then((resp) => {
+      CurrentUser((resp) => {
         if (resp) {
           setUserdata(resp);
           console.log(resp);
+        } else {
+          setAuthdata({
+            logged_in: false,
+          });
         }
-        // else {
-        //   setAuthdata({
-        //     logged_in: false,
-        //     localStorage.removeItem("token");
-        //   });
-        // }
       });
     }
   }, [authdata]);
 
-  const handle_login = (data) => {
-    LoginUser(data).then((resp) => {
-      if (resp) {
-        localStorage.setItem("token", resp.token);
-        setAuthdata({
-          logged_in: true,
-        });
-      } else {
-        setAuthdata({
-          logged_in: false,
-        });
-      }
-    });
+  const handle_login = async (data) => {
+    const resp = await LoginUser(data);
+    if (resp) {
+      localStorage.setItem("token", resp.token);
+      setAuthdata({
+        logged_in: true,
+      });
+    } else {
+      setAuthdata({
+        logged_in: false,
+      });
+    }
   };
 
   const handle_logout = () => {
@@ -85,25 +77,17 @@ const App = () => {
       <Router>
         <Navbar logout={handle_logout} logged_in={authdata.logged_in} />
         <Switch>
-          <Route path="/auth">
-            {authdata.logged_in ? (
-              <Redirect to="profile"></Redirect>
-            ) : (
-              <Auth
-                LoginHandle={(data) => handle_login(data)}
-                handleSignup={(data) => handle_signup(data)}
-              />
-            )}
-          </Route>
           <Route path="/profile">
-          {!authdata.logged_in ? (
-              <Redirect to="auth"></Redirect>
-            ) : (
-            <Profile UserData={userdata} />)}
+            <Profile UserData={userdata} />
+          </Route>
+          <Route path="/auth">
+            <Auth
+              LoginHandle={(data) => handle_login(data)}
+              handleSignup={(data) => handle_signup(data)}
+            />
           </Route>
           <Route path="/">
-          <Redirect to="profile"></Redirect>
-            {/* <Profile /> */}
+            <Profile />
           </Route>
         </Switch>
       </Router>
