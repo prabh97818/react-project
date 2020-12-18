@@ -6,21 +6,24 @@ import API from "./api";
 //   headers: { Authorization: `JWT ${localStorage.getItem("token")}` },
 // };
 
-
-
 const CurrentUser = () => {
-  console.log("token: ", localStorage.getItem("token"))
-  let mydata = API.get(`api/current_user/`, {headers: { Authorization: `JWT ${localStorage.getItem("token")}` },})
+  let mydata = API.get(`api/current_user/`, {
+    headers: { Authorization: `JWT ${localStorage.getItem("token")}` },
+  })
     .then((res) => res.data)
-    .catch((err) => {console.log(err); });
-  return mydata ;
+    .catch((err) => {
+      console.log(err);
+    });
+  return mydata;
 };
-
 
 const LoginUser = (data) => {
   let newdata = API.post(`token-auth/`, data)
     .then((res) => res.data)
-    .catch((err) => {console.log(err); localStorage.removeItem("token");});
+    .catch((err) => {
+      console.log(err);
+      localStorage.removeItem("token");
+    });
   return newdata;
 };
 
@@ -33,27 +36,36 @@ const SignupUser = (data) => {
 };
 
 const UserTasks = () => {
-  console.log("token: ", localStorage.getItem("token"))
-  let mydata = API.get(`task/`, {headers: { Authorization: `JWT ${localStorage.getItem("token")}` },})
+  let mydata = API.get(`task/`, {
+    headers: { Authorization: `JWT ${localStorage.getItem("token")}` },
+  })
     .then((res) => res.data)
-    .catch((err) => {console.log(err); });
-  return mydata ;
+    .catch((err) => {
+      console.log(err);
+    });
+  return mydata;
 };
 
-const NewTasks = () => {
-  console.log("token: ", localStorage.getItem("token"))
-  let mydata = API.post(`task/`, {headers: { Authorization: `JWT ${localStorage.getItem("token")}` },})
+const NewTasks = (data) => {
+  let mydata = API.post(`task/`, data, {
+    headers: { Authorization: `JWT ${localStorage.getItem("token")}` },
+  })
     .then((res) => res.data)
-    .catch((err) => {console.log(err); });
-  return mydata ;
+    .catch((err) => {
+      console.log(err);
+    });
+  return mydata;
 };
 
 const DeleteTasks = (param) => {
-  console.log("token: ", localStorage.getItem("token"))
-  let mydata = API.post(`task/${param}`, {headers: { Authorization: `JWT ${localStorage.getItem("token")}` },})
+  let mydata = API.delete(`task/?${param}`, {
+    headers: { Authorization: `JWT ${localStorage.getItem("token")}` },
+  })
     .then((res) => res.data)
-    .catch((err) => {console.log(err); });
-  return mydata ;
+    .catch((err) => {
+      console.log(err);
+    });
+  return mydata;
 };
 
 export { CurrentUser, LoginUser, SignupUser, UserTasks, NewTasks, DeleteTasks };

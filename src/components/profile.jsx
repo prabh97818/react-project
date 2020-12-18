@@ -4,12 +4,9 @@ const Profile = (props) => {
 
     const { UserData} = props
     return (
-      <div className="container">
-        <div className="col-md-4 ml-auto mr-auto ">
-          <div
-            className="contaier-fluid ml-auto mr-auto p-5 mt-5"
-            style={{background: "whitesmoke",}}
-          >
+      <div className="row">
+        <div className="col-3 ml-auto mr-auto p-5 my-4" style={{background: "whitesmoke",}}>
+          
             <div className="text-center">
               <h2>Profile</h2>
             </div>
@@ -22,11 +19,9 @@ const Profile = (props) => {
             <div className="form-group pb-3 ">
               <label htmlFor="exampleInputEmail1 " className="lead">email: { UserData.email}</label>
             </div>
-            <button className="btn btn-primary mt-2 btn-block">Edit Profile</button>
-            <button className="btn btn-primary mt-2 btn-block">Change Password</button>
           </div>
         </div>
-      </div>
+      
     );
   }
 

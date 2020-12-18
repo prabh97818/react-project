@@ -34,13 +34,12 @@ const App = () => {
         if (resp) {
           setUserdata(resp);
           console.log(resp);
+        } else {
+          setAuthdata({
+            logged_in: false,
+          });
+          localStorage.removeItem("token");
         }
-        // else {
-        //   setAuthdata({
-        //     logged_in: false,
-        //     localStorage.removeItem("token");
-        //   });
-        // }
       });
     }
   }, [authdata]);
@@ -56,6 +55,8 @@ const App = () => {
         setAuthdata({
           logged_in: false,
         });
+        alert("Email or Pasword is incorrect");
+
       }
     });
   };
@@ -69,16 +70,18 @@ const App = () => {
 
   const handle_signup = async (data) => {
     const resp = await SignupUser(data);
-    console.log(resp);
-    if (resp.token) {
-      localStorage.setItem("token", resp.token);
-      this.setState({
-        logged_in: true,
-      });
+    if (resp.success) {
+      alert("An activation link is sent to you on your email id. Plese check your email now! ")
+      // localStorage.setItem("token", resp.token);
+      // setAuthdata({
+      //   logged_in: true,
+      // });
+  
     } else {
-      setAuthdata({
-        logged_in: false,
-      });
+      // setAuthdata({
+      //   logged_in: false,
+      // });
+      alert("An Error occured, we couldn't create your account");
     }
   };
 
@@ -89,7 +92,7 @@ const App = () => {
         <Switch>
           <Route path="/auth">
             {authdata.logged_in ? (
-              <Redirect to="profile"></Redirect>
+              <Redirect to="/"></Redirect>
             ) : (
               <Auth
                 LoginHandle={(data) => handle_login(data)}
@@ -97,25 +100,26 @@ const App = () => {
               />
             )}
           </Route>
-          <Route path="/addTask">
-          {!authdata.logged_in ? (
+          <Route path="/add-task">
+            {!authdata.logged_in ? (
               <Redirect to="auth"></Redirect>
             ) : (
-            <AddTask />)}
+              <AddTask />
+            )}
           </Route>
           <Route path="/task">
-          {!authdata.logged_in ? (
+            {!authdata.logged_in ? (
               <Redirect to="auth"></Redirect>
             ) : (
-            <AllTask />)}
+              <AllTask />
+            )}
           </Route>
           <Route path="/">
-          {!authdata.logged_in ? (
+            {!authdata.logged_in ? (
               <Redirect to="auth"></Redirect>
             ) : (
-            <Profile UserData={userdata} />)}
-          
-            
+              <Profile UserData={userdata} />
+            )}
           </Route>
         </Switch>
       </Router>

@@ -1,4 +1,4 @@
-import React, { useCallback, Component, useState } from "react";
+import React, { useCallback, useState } from "react";
 import FormInput from "./reusables/formInputs";
 import FormButton from "./reusables/formButtons";
 
@@ -13,7 +13,7 @@ const Auth = (props) => {
     const { name, value } = event.target;
     
     setUserInput({ ...user, [name]: value });
-    console.log("hello", user);
+
     // const { user } = this.state;
     // user[name] = value;
     // this.setState({ user });
@@ -126,7 +126,7 @@ const Auth = (props) => {
                   <FormButton
                     label="Login"
                     className="btn btn-warning mt-2 btn-block"
-                    handleClick={handleSignupClick}
+                    handleClick={onChangeLogin}
                   />
                 </div>
               </div>

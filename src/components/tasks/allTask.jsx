@@ -1,20 +1,56 @@
-import React from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import React, { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { DeleteTasks, UserTasks } from "../../services/myrequests";
+
+import { Link } from "react-router-dom";
 
 const AllTask = (props) => {
+  const initialState = {
+    value:1
+  }
+  const [allUserTask, setallUserTask] = useState([]);
+  const [delvlue, setdelvlue] = useState(initialState);
+
+  useEffect(() => {
+    UserTasks().then((resp) => {
+      if (resp) {
+        setallUserTask(resp);
+      } else {
+        localStorage.removeItem("token");
+      }
+    });
+  }, [delvlue]);
+
+  const handleDeleteTask = (id) => {
+    DeleteTasks(`id=${id}`).then((resp) => {
+      if (resp) {
+        alert("Task Deleted");
+        setdelvlue({value:delvlue.value+1})
+      } else {
+        alert("Sorry! We couldnot delete task.");
+      }
+    });
+  };
+
   return (
     <div className="container">
       <div
         className="col-md-8 ml-auto mr-auto my-4 p-4"
         style={{ background: "whitesmoke" }}
       >
-        <h2 ><span className="text-center ml-5"> All Tasks</span> <span className="float-right mr-5" style={{color:'blue'}}><FontAwesomeIcon icon={faPlus} /></span> </h2>
+        <h2>
+          <span className="text-center ml-4"> All Tasks</span>{" "}
+          <span className="float-right mr-4" style={{ color: "blue" }}>
+            <Link to="add-task" className="nav-link">
+              <FontAwesomeIcon icon={faPlus} />
+            </Link>
+          </span>{" "}
+        </h2>
 
         <table className="table">
           <thead>
             <tr>
-              <th scope="col">#</th>
               <th scope="col">Title</th>
               <th scope="col">Description</th>
               <th scope="col">Start Date</th>
@@ -23,24 +59,36 @@ const AllTask = (props) => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Title 1</td>
-              <td>Description 1</td>
-              <td>2020-12-17</td>
-              <td>2020-12-20</td>
-              <td><button className="btn btn-danger btn-sm">Delete </button></td>
+          
+            {allUserTask.length > 0 ? (
+              allUserTask.map((tsks) => (
 
-              
-            </tr>
-            <tr>
+                <tr key={tsks.id}>
+                <td>{tsks.task_name}</td>
+                <td>{tsks.description}</td>
+                <td>{tsks.start_date}</td>
+                <td>{tsks.due_date}</td>
+                <td>
+                  <button className="btn btn-danger btn-sm" onClick={() => {handleDeleteTask(tsks.id)}}>Delete </button>
+                </td>
+              </tr>
+                
+              ))
+            ) : (
+              <tr>
+                <td colSpan={6}>No users</td>
+              </tr>
+            )}
+
+            {/* <tr>
               <th scope="row">2</th>
               <td>Title 2</td>
               <td>Description 2</td>
               <td>2020-12-17</td>
               <td>2020-12-20</td>
-              <td><button  className="btn btn-danger btn-sm">Delete </button></td>
-
+              <td>
+                <button className="btn btn-danger btn-sm">Delete </button>
+              </td>
             </tr>
             <tr>
               <th scope="row">3</th>
@@ -48,9 +96,10 @@ const AllTask = (props) => {
               <td>Description 3</td>
               <td>2020-12-17</td>
               <td>2020-12-20</td>
-              <td><button  className="btn btn-danger btn-sm">Delete </button></td>
-
-            </tr>
+              <td>
+                <button className="btn btn-danger btn-sm">Delete </button>
+              </td>
+            </tr> */}
           </tbody>
         </table>
       </div>
