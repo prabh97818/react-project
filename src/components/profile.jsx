@@ -5,7 +5,7 @@ const Profile = (props) => {
     const { UserData} = props
     return (
       <div className="row">
-        <div className="col-3 ml-auto mr-auto p-5 my-4" style={{background: "whitesmoke",}}>
+        <div className="col-5 ml-auto mr-auto p-5 my-4" style={{background: "whitesmoke", display: "inline-grid"}}>
           
             <div className="text-center">
               <h2>Profile</h2>
@@ -16,7 +16,7 @@ const Profile = (props) => {
             <div className="form-group">
               <label htmlFor="exampleInputEmail1 " className="lead">Username: { UserData.username}</label>
             </div>
-            <div className="form-group pb-3 ">
+            <div className="form-group">
               <label htmlFor="exampleInputEmail1 " className="lead">email: { UserData.email}</label>
             </div>
           </div>

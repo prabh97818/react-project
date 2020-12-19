@@ -35,6 +35,16 @@ const SignupUser = (data) => {
   return newdata;
 };
 
+const VerifyThis = (param) => {
+  let mydata = API.get(`api/approve-account/${param}`)
+    .then((res) => res.data)
+    .catch((err) => {
+      console.log(err);
+    });
+  return mydata;
+};
+
+
 const UserTasks = () => {
   let mydata = API.get(`task/`, {
     headers: { Authorization: `JWT ${localStorage.getItem("token")}` },
@@ -68,7 +78,7 @@ const DeleteTasks = (param) => {
   return mydata;
 };
 
-export { CurrentUser, LoginUser, SignupUser, UserTasks, NewTasks, DeleteTasks };
+export { CurrentUser, LoginUser, SignupUser, UserTasks, NewTasks, DeleteTasks, VerifyThis };
 
 // export default CurrentUser;
 

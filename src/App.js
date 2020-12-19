@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Auth from "./components/auth";
 import Navbar from "./components/navbar";
 import Profile from "./components/profile";
+import VerifyeAccount from "./components/VerifyeAccount";
 import AddTask from "./components/tasks/addtask";
 import AllTask from "./components/tasks/allTask";
 import {
@@ -90,6 +91,7 @@ const App = () => {
       <Router>
         <Navbar logout={handle_logout} logged_in={authdata.logged_in} />
         <Switch>
+          <Route path="/verifyAccount/:token" component = {VerifyeAccount}/>
           <Route path="/auth">
             {authdata.logged_in ? (
               <Redirect to="/"></Redirect>
@@ -114,7 +116,8 @@ const App = () => {
               <AllTask />
             )}
           </Route>
-          <Route path="/">
+
+          <Route exact  path="/">
             {!authdata.logged_in ? (
               <Redirect to="auth"></Redirect>
             ) : (
