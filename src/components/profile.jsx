@@ -1,8 +1,29 @@
-import React from "react";
+import React, { useEffect, useState }  from "react";
+import { CurrentUser } from "../services/myrequests";
 
 const Profile = (props) => {
 
-    const { UserData} = props
+  const currentUserdata = {
+    username: "",
+    email: "",
+    first_name: "",
+    last_name: "",
+  };
+  const [userdata, setUserdata] = useState(currentUserdata);
+
+  useEffect(() => {
+      CurrentUser().then((resp) => {
+        if (resp) {
+          setUserdata(resp);
+        } else {
+          localStorage.removeItem("token");
+        }
+      });
+    
+  }, []);
+
+
+    const UserData = userdata
     return (
       <div className="row">
         <div className="col-5 ml-auto mr-auto p-5 my-4" style={{background: "whitesmoke", display: "inline-grid"}}>

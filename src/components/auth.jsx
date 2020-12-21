@@ -1,11 +1,17 @@
 import React, { useCallback, useState } from "react";
 import FormInput from "./reusables/formInputs";
 import FormButton from "./reusables/formButtons";
+import { LoginUser, SignupUser } from "../services/myrequests";
+import { Redirect } from "react-router-dom";
 
 const Auth = (props) => {
   const initState = {
     isRegister: false,
   };
+  const stst = {
+    value:false
+  }
+  const [loggedin, setLoggedIn] = useState(stst);
   const [regData, setRegdata] = useState(initState);
   const [user, setUserInput] = useState({});
 
@@ -14,9 +20,7 @@ const Auth = (props) => {
     
     setUserInput({ ...user, [name]: value });
 
-    // const { user } = this.state;
-    // user[name] = value;
-    // this.setState({ user });
+
   };
 
   const onChangeRegister = () => {
@@ -29,17 +33,33 @@ const Auth = (props) => {
 
     // this.setState({ isRegister: false });
   };
-
+  
   const handleLoginClick = useCallback(() => {
-    props.LoginHandle(user) 
+    LoginUser(user).then((resp) => {
+      if (resp) {
+        localStorage.setItem("token", resp.token);
+        setLoggedIn({value:true})
+      } else {
+        alert("Email or Pasword is incorrect");
+      } 
+    });
   }, [user,]);
 
   const handleSignupClick = useCallback(() => {
-    props.handleSignup(user) 
+    SignupUser(user).then((resp) => {
+      if (resp.success) {
+        alert("An activation link is sent to you on your email id. Plese check your email now! ")
+      } else {
+        alert("An Error occured, we couldn't create your account");
+      }
+    });
   }, [user,]);
 
   return (
     <div className="container">
+      {
+        loggedin.value ? <Redirect to="/"></Redirect> : null 
+      }
       <div className="col-md-4 ml-auto mr-auto ">
         <div
           className="contaier-fluid ml-auto mr-auto px-5 py-5 mt-5"

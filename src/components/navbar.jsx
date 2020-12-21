@@ -2,6 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = (props) => {
+
+  const handle_logout = () => {
+    localStorage.removeItem("token");
+    
+  };
+  
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <Link to="/" className="navbar-brand">
@@ -34,8 +40,8 @@ const Navbar = (props) => {
       <Link to="auth"  className="nav-link">Edit</Link>
       </li> */}
           <li className="nav-item active">
-            {props.logged_in ? (
-              <a onClick={props.logout}  href="" className="nav-link">
+            {localStorage.getItem("token") ? (
+              <a onClick={handle_logout}  href="" className="nav-link">
                 Logout
               </a>
             ) : (

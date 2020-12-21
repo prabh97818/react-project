@@ -41,7 +41,7 @@ class AllUser extends Component {
           style={{ background: "whitesmoke" }}
         >
           <h2>
-            <span className="text-center ml-4"> All Tasks</span>
+            <span className="text-center ml-4"> All Users</span>
           </h2>
 
           <table className="table">
