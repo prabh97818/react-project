@@ -78,7 +78,30 @@ const DeleteTasks = (param) => {
   return mydata;
 };
 
-export { CurrentUser, LoginUser, SignupUser, UserTasks, NewTasks, DeleteTasks, VerifyThis };
+
+const AllUserDetail = () => {
+  let mydata = API.get(`api/all-user`, {
+    headers: { Authorization: `JWT ${localStorage.getItem("token")}` },
+  })
+    .then((res) => res.data)
+    .catch((err) => {
+      console.log(err);
+    });
+  return mydata;
+};
+
+const DeleteUser = (param) => {
+  let mydata = API.delete(`api/all-user?${param}`, {
+    headers: { Authorization: `JWT ${localStorage.getItem("token")}` },
+  })
+    .then((res) => res.data)
+    .catch((err) => {
+      console.log(err);
+    });
+  return mydata;
+};
+
+export { CurrentUser, LoginUser, SignupUser, UserTasks, NewTasks, DeleteTasks, VerifyThis, AllUserDetail, DeleteUser };
 
 // export default CurrentUser;
 

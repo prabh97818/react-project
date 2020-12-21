@@ -76,30 +76,10 @@ const AllTask = (props) => {
               ))
             ) : (
               <tr>
-                <td colSpan={6}>No users</td>
+                <td colSpan={6}>No Task</td>
               </tr>
             )}
 
-            {/* <tr>
-              <th scope="row">2</th>
-              <td>Title 2</td>
-              <td>Description 2</td>
-              <td>2020-12-17</td>
-              <td>2020-12-20</td>
-              <td>
-                <button className="btn btn-danger btn-sm">Delete </button>
-              </td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Title 3</td>
-              <td>Description 3</td>
-              <td>2020-12-17</td>
-              <td>2020-12-20</td>
-              <td>
-                <button className="btn btn-danger btn-sm">Delete </button>
-              </td>
-            </tr> */}
           </tbody>
         </table>
       </div>

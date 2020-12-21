@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Auth from "./components/auth";
 import Navbar from "./components/navbar";
 import Profile from "./components/profile";
+import AllUser from "./components/allUser";
 import VerifyeAccount from "./components/VerifyeAccount";
 import AddTask from "./components/tasks/addtask";
 import AllTask from "./components/tasks/allTask";
@@ -116,6 +117,14 @@ const App = () => {
               <AllTask />
             )}
           </Route>
+          <Route path="/allUser">
+            {!authdata.logged_in ? (
+              <Redirect to="auth"></Redirect>
+            ) : (
+              <AllUser />
+            )}
+          </Route>
+
 
           <Route exact  path="/">
             {!authdata.logged_in ? (
