@@ -1,5 +1,3 @@
-import React from "react";
-
 import API from "./api";
 
 // const config = {
@@ -101,7 +99,29 @@ const DeleteUser = (param) => {
   return mydata;
 };
 
-export { CurrentUser, LoginUser, SignupUser, UserTasks, NewTasks, DeleteTasks, VerifyThis, AllUserDetail, DeleteUser };
+const EditUserDetail = (username) => {
+  let mydata = API.get(`api/current_user/?username=${username}`, {
+    headers: { Authorization: `JWT ${localStorage.getItem("token")}` },
+  })
+    .then((res) => res.data)
+    .catch((err) => {
+      console.log(err);
+    });
+  return mydata;
+};
+
+const EditThisUser = (data, param) => {
+  let mydata = API.put(`api/all-user/?username=${param}`, data, {
+    headers: { Authorization: `JWT ${localStorage.getItem("token")}` },
+  })
+    .then((res) => res.data)
+    .catch((err) => {
+      console.log(err);
+    });
+  return mydata;
+};
+
+export { CurrentUser, LoginUser, SignupUser, UserTasks, NewTasks, DeleteTasks, VerifyThis, AllUserDetail, DeleteUser, EditThisUser, EditUserDetail };
 
 // export default CurrentUser;
 

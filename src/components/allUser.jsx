@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { AllUserDetail, DeleteUser } from "../services/myrequests";
 
 class AllUser extends Component {
@@ -9,7 +10,7 @@ class AllUser extends Component {
   updateUserList = () => {
     AllUserDetail().then((resp) => {
       if (resp) {
-        this.setState({allUser :resp});
+        this.setState({ allUser: resp });
       } else {
         alert("Sorry, we couldn't fetch users detail");
       }
@@ -20,8 +21,18 @@ class AllUser extends Component {
     this.updateUserList();
   }
 
-
   handleDeleteUser = (username) => {
+    DeleteUser(`username=${username}`).then((resp) => {
+      if (resp) {
+        alert("User Deleted");
+        this.updateUserList();
+        this.setState({ value: this.state.value + 1 });
+      } else {
+        alert("Sorry! We couldnot delete user.");
+      }
+    });
+  };
+  handleEditUser = (username) => {
     DeleteUser(`username=${username}`).then((resp) => {
       if (resp) {
         alert("User Deleted");
@@ -59,6 +70,15 @@ class AllUser extends Component {
                     <td>{usr.username} </td>
                     <td>{usr.email}</td>
                     <td>
+                      <Link
+                        to={`/editUser/${usr.username}`}
+                        style={{ display: "inline" }}
+                        className="nav-link"
+                      >
+                        <button className="btn btn-warning btn-sm">
+                          Edit{" "}
+                        </button>
+                      </Link>
                       <button
                         className="btn btn-danger btn-sm"
                         onClick={() => {

@@ -1,5 +1,5 @@
 import React from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, withRouter } from "react-router-dom";
 import Navbar from "./navbar";
 
 function Protected(props) {
@@ -21,4 +21,4 @@ function Protected(props) {
   );
 }
 
-export default Protected;
+export default withRouter(Protected);

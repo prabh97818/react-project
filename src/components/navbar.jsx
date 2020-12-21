@@ -27,12 +27,12 @@ const Navbar = (props) => {
       <div className="collapse navbar-collapse" id="navbarNavDropdown">
         <ul className="navbar-nav">
         <li className="nav-item active">
-            <Link to="allUser" className="nav-link">
+            <Link to="/allUser" className="nav-link">
               Users
             </Link>
           </li>
           <li className="nav-item active">
-            <Link to="task" className="nav-link">
+            <Link to="/task" className="nav-link">
               Tasks
             </Link>
           </li>
@@ -45,7 +45,7 @@ const Navbar = (props) => {
                 Logout
               </a>
             ) : (
-              <Link to="auth" className="nav-link">
+              <Link to="/auth" className="nav-link">
                 Login
               </Link>
             )}
